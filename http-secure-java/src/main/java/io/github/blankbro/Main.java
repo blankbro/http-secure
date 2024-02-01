@@ -1,19 +1,32 @@
 package io.github.blankbro;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+
+@Slf4j
 public class Main {
-    public static void main(String[] args) {
-        // Press Opt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args) throws Exception {
+        // 获取默认配置的 HttpClient
+        CloseableHttpClient httpClient = HttpClients.createDefault();
 
-        // Press Ctrl+R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        // 请求路径及参数
+        String url = "https://www.baidu.com";
 
-            // Press Ctrl+D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Cmd+F8.
-            System.out.println("i = " + i);
+        // 创建 GET 请求对象
+        HttpGet httpGet = new HttpGet(url);
+        // 调用 HttpClient 的 execute 方法执行请求
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+        // 获取请求状态
+        int code = response.getCode();
+        // 如果请求成功
+        if (code == HttpStatus.SC_OK) {
+            log.info("响应结果为：{}", EntityUtils.toString(response.getEntity()));
         }
+
     }
 }
