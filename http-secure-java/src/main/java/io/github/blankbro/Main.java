@@ -4,15 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 @Slf4j
 public class Main {
+
     public static void main(String[] args) throws Exception {
         // 获取默认配置的 HttpClient
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpClient httpClient = HttpClientUtil.defaultClient();
 
         // 请求路径及参数
         String url = "https://www.baidu.com";
@@ -27,6 +27,6 @@ public class Main {
         if (code == HttpStatus.SC_OK) {
             log.info("响应结果为：{}", EntityUtils.toString(response.getEntity()));
         }
-
     }
+
 }
